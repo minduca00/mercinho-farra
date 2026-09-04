@@ -310,6 +310,20 @@ body.menu-open { overflow: hidden; }
     linear-gradient(180deg, rgba(10,11,13,0.42) 0%, rgba(10,11,13,0.10) 42%, rgba(10,11,13,0.94) 100%),
     linear-gradient(90deg, rgba(10,11,13,0.78) 0%, rgba(10,11,13,0.28) 55%, rgba(10,11,13,0) 100%);
 }
+.hero__overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 77, 36, 0.14) 50%, transparent 65%);
+  background-size: 220% 100%;
+  animation: heroSweep 8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes heroSweep {
+  0%, 20% { background-position: 120% 0; opacity: 0; }
+  45%, 70% { background-position: -20% 0; opacity: 1; }
+  90%, 100% { background-position: -20% 0; opacity: 0; }
+}
 
 .hero__content {
   position: relative;
@@ -415,6 +429,10 @@ body.menu-open { overflow: hidden; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.artista__media:hover img {
+  transform: scale(1.04);
 }
 
 .artista__bio {
@@ -580,6 +598,10 @@ body.menu-open { overflow: hidden; }
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
+  transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.musica__cover:hover img {
+  transform: scale(1.04);
 }
 
 .musica__label {
