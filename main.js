@@ -4,6 +4,67 @@ document.addEventListener('DOMContentLoaded', () => {
   const navToggle = document.getElementById('navToggle');
   const navMenu = document.getElementById('navMenu');
   const year = document.getElementById('year');
+  const musicToggle = document.getElementById('musicToggle');
+  const musicPlayer = document.getElementById('ambientMusicPlayer');
+
+  /* Música ambiente do YouTube via API oficial, com fallback para autoplay bloqueado. */
+  let ambientPlayer;
+  let musicReady = false;
+
+  const setMusicButton = (isPlaying, isAudible) => {
+    if (!musicToggle) return;
+    const playIcon = musicToggle.querySelector('.music-toggle__play');
+    const volumeIcon = musicToggle.querySelector('.music-toggle__volume');
+    if (playIcon) playIcon.textContent = isPlaying ? '⏸' : '▶';
+    if (volumeIcon) volumeIcon.textContent = isAudible ? '🔊' : '🔇';
+    musicToggle.setAttribute('aria-pressed', String(isPlaying));
+    musicToggle.setAttribute('aria-label', isPlaying ? 'Pausar música ambiente' : 'Tocar música ambiente');
+  };
+
+  const startAmbientMusic = () => {
+    if (!musicReady || !ambientPlayer) return;
+    ambientPlayer.setVolume(35);
+    ambientPlayer.unMute();
+    ambientPlayer.playVideo();
+  };
+
+  window.onYouTubeIframeAPIReady = () => {
+    if (!musicPlayer) return;
+    if (ambientPlayer) return;
+
+    if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+      const playerUrl = new URL(musicPlayer.src);
+      playerUrl.searchParams.set('origin', window.location.origin);
+      musicPlayer.src = playerUrl.toString();
+    }
+
+    ambientPlayer = new YT.Player('ambientMusicPlayer', {
+      events: {
+        onReady: () => {
+          musicReady = true;
+          startAmbientMusic();
+        },
+        onStateChange: (event) => {
+          const isPlaying = event.data === YT.PlayerState.PLAYING;
+          const isAudible = isPlaying && !ambientPlayer.isMuted();
+          setMusicButton(isPlaying, isAudible);
+        }
+      }
+    });
+  };
+
+  if (window.YT && window.YT.Player) window.onYouTubeIframeAPIReady();
+
+  if (musicToggle) {
+    musicToggle.addEventListener('click', () => {
+      if (!musicReady || !ambientPlayer) return;
+      if (ambientPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+        ambientPlayer.pauseVideo();
+      } else {
+        startAmbientMusic();
+      }
+    });
+  }
 
   /* Ano no rodapé */
   if (year) year.textContent = new Date().getFullYear();

@@ -323,6 +323,23 @@
   </div>
 </footer>
 
+<!-- Player ambiente do YouTube: mantido discreto e controlado pela API oficial. -->
+<div class="music-player" aria-hidden="true">
+  <iframe
+    id="ambientMusicPlayer"
+    title="Música ambiente"
+    src="https://www.youtube.com/embed/U4sSn1bN78U?enablejsapi=1&controls=0&loop=1&playlist=U4sSn1bN78U&playsinline=1&rel=0"
+    allow="autoplay; encrypted-media"
+    tabindex="-1"></iframe>
+</div>
+
+<!-- Controle da música ambiente. -->
+<button class="music-toggle" id="musicToggle" type="button" aria-label="Tocar música ambiente" aria-pressed="false">
+  <span class="music-toggle__play" aria-hidden="true">▶</span>
+  <span class="music-toggle__volume" aria-hidden="true">🔇</span>
+</button>
+
+<script src="https://www.youtube.com/iframe_api"></script>
 <script src="main.js" defer></script>
 </body>
 </html>

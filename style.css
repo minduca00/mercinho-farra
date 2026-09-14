@@ -968,6 +968,54 @@ body.menu-open { overflow: hidden; }
   color: var(--muted);
 }
 
+/* Player ambiente do YouTube: presente para a API, sem competir com o conteúdo. */
+.music-player {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.music-player iframe {
+  width: 1px;
+  height: 1px;
+  border: 0;
+}
+
+/* Controle fixo da música, reposicionado acima do conteúdo em telas menores. */
+.music-toggle {
+  position: fixed;
+  right: clamp(16px, 3vw, 32px);
+  bottom: clamp(16px, 3vw, 32px);
+  z-index: 110;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 58px;
+  min-height: 48px;
+  padding: 0 15px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(17, 19, 24, 0.88);
+  color: var(--fg);
+  font: 600 16px/1 var(--font-body);
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+.music-toggle:hover,
+.music-toggle:focus-visible {
+  border-color: var(--accent);
+  background: rgba(17, 19, 24, 0.98);
+  transform: translateY(-2px);
+}
+.music-toggle__volume { font-size: 15px; }
+
+
 /* ==========================================================================
    REVEAL ON SCROLL
    ========================================================================== */
@@ -1051,4 +1099,9 @@ body.menu-open { overflow: hidden; }
   .contato__panel .btn--lg { width: 100%; }
   .footer__grid { grid-template-columns: 1fr; }
   .footer__bottom { flex-direction: column; }
+
+  .music-toggle {
+    right: 16px;
+    bottom: 16px;
+  }
 }
