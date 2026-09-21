@@ -971,16 +971,18 @@ body.menu-open { overflow: hidden; }
 /* Player ambiente do YouTube: presente para a API, sem competir com o conteúdo. */
 .music-player {
   position: fixed;
-  width: 1px;
-  height: 1px;
+  width: 200px;
+  height: 113px;
+  left: -220px;
+  bottom: 0;
   overflow: hidden;
-  opacity: 0;
+  opacity: 0.01;
   pointer-events: none;
   z-index: -1;
 }
 .music-player iframe {
-  width: 1px;
-  height: 1px;
+  width: 200px;
+  height: 113px;
   border: 0;
 }
 
